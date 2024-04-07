@@ -1,0 +1,48 @@
+<div style="height: 40px;"></div>
+<!-- content-->
+<div class="container-fluid">
+    <div class="row" *ngFor="let item of data">
+        <div class="col-lg-2">    
+        </div>
+        <!-- one organisation-->
+        <div class="col-lg-8 organisation mb-5" style="cursor: pointer;" (click)="orgSelected(item.naziv,item.festivali)">
+           <div class="container-fluid">
+            <div class="row">
+                <!-- image-->
+                <div class="col-lg-2 col-sm-12">
+                    <div class="circle" [style.backgroundImage]="'url(' + item.logo + ')'">
+                    </div>
+                </div>
+                <!-- info-->
+                <div class="col-lg-10 col-sm-12" id="info">
+                     <!-- header-->
+                   <div id="header">
+                    <div style=" text-transform: uppercase;">{{item.naziv}}</div>
+                    <div id="godina">Since {{item.godinaOsnivanja}}</div>
+                   </div> 
+                    <!-- contacts & email-->
+                   <div class="row" style="padding: 15px;">
+                        <div class="col-lg-6 col-sm-12">
+                            <span class="label">Email:</span>
+                            <span class="value">{{item.email}}</span>
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                            <span class="label">Contact Phone:</span>
+                            <span class="value">{{item.kontaktTelefon}}</span>
+                        </div>
+                   </div>
+                   <div>
+
+                   </div>
+                </div>
+                
+            </div>
+           </div>
+           <!-- end of organistion-->
+        </div>
+        <div class="col-lg-2">
+        </div>
+      </div>
+</div>
+
+

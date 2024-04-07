@@ -1,0 +1,42 @@
+
+.organisation {
+    height: 30%; 
+    border-top-left-radius:  150px;
+    border-bottom-left-radius:150px;
+    background-color: #E1E5EE; 
+    transition: border-top-right-radius 0.3s, border-bottom-right-radius 0.3s,background-color 0.3s; 
+}
+.organisation:hover {
+    border-top-right-radius: 150px; /* Set border-radius to create half-circle */
+    border-bottom-right-radius: 150px;
+    background-color:white;
+  }
+.circle {
+    margin-top: 5%;
+    width: 90%; /* Set the width and height to desired size of the circle */
+    height: 90%;
+    border-radius: 50%; /* Make it a circle */
+    background-size: cover; /* Cover the circle with the background image */
+    background-position: center; /* Center the background image */
+  }
+  #info{
+    padding-top: 7px;
+    text-align: center;
+  }
+  #header{
+    font-size: 28px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: 600;
+  }
+  #godina{
+    font-size: 17px;
+    color: #666;
+  }
+  .label {
+    font-weight: bold;
+    color: #333; /* Optional: Change label color */
+  }
+  .value {
+    margin-left: 10px;
+    color: #666; /* Optional: Change value color */
+  }
