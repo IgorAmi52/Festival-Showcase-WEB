@@ -4,7 +4,7 @@
 </div>
 <!--festivals-->
     <div *ngFor="let item of data">
-        <div class="festival col-12" [style.backgroundImage]="'url(' + item.slike[0] + ')'">
+        <div class="festival col-12" [style.backgroundImage]="'url(' + item.slike[0] + ')'" (click)="festSelected(item.ID,item.naziv)">
             {{item.naziv}}
         </div>
     </div>

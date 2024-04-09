@@ -6,6 +6,7 @@
     padding: 15px;
 }
 .festival {
+  cursor: pointer;
   display: flex;
   align-items: center; /* Vertically center items */
   justify-content: center;

@@ -1,0 +1,47 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-1"></div>
+    <!--courousel-->
+    <div class="col-10">
+      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+   
+        <div class="carousel-inner">
+          <div class="carousel-item" *ngFor="let photo of fest.slike; let i = index" [class.active]="i === 0">
+            <div [style.backgroundImage]="'url(' + photo + ')'" class="image"></div>
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only"></span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only"></span>
+        </a>
+      </div>
+    <!--info-->
+    <div id="info">
+      <div id="name">
+        {{fest.naziv}}
+      </div>
+      <p class="event-description">{{fest.opis}}</p>
+    <div class="event-info">
+      <div class="info-item">
+        <span class="info-label">Cena:</span>
+        <span class="info-value"> {{fest.cena}} RSD</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Kapacitet:</span>
+        <span class="info-value"> {{fest.maxOsoba}} Ljudi</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Prevoz:</span>
+        <span class="info-value"> {{fest.prevoz}}</span>
+      </div>
+    </div>
+    </div>
+   
+    </div>
+    <div class="col-1"></div>
+  </div>
+</div>

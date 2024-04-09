@@ -26,6 +26,6 @@ export class MainMenuComponent implements OnInit {
     );
   }
   orgSelected(selectedFestsID: String, selectedOrgName) {
-    this.router.navigate([selectedFestsID, selectedOrgName]);
+    this.router.navigate(['organisation', selectedOrgName, selectedFestsID]);
   }
 }

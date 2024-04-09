@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FirebaseApiService } from 'src/app/networking/firebase-api.service';
 import { Festival } from '../../models/festival.interface';
 @Component({
@@ -12,6 +12,7 @@ export class FestivalsComponent implements OnInit {
   orgName: String;
   data: Array<Festival> = [];
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private ApiService: FirebaseApiService
   ) {}
@@ -25,11 +26,21 @@ export class FestivalsComponent implements OnInit {
           const festival = { ...festivals[id], ID: id };
           this.data.push(festival);
         }
-        console.log(this.data);
       },
       (err) => {
         console.log(err);
       }
     );
+  }
+  festSelected(festID: String, festName) {
+    let json;
+
+    this.data.forEach((element) => {
+      if (element.ID == festID) {
+        json = element;
+      }
+    });
+
+    this.router.navigate(['festival', festName], { state: { jsonData: json } });
   }
 }
