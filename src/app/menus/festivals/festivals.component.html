@@ -1,10 +1,33 @@
 <!--organisation-->
-<div id="org">
-    {{orgName}}
+<div id="details">
+    <div id="header">
+        {{org.naziv}} 
+    </div>
+        <div class="info">
+
+            <div class="info-item">
+              <span class="info-label">Year of making:</span>
+              <span class="info-value">  {{org.godinaOsnivanja}}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Contact Email:</span>
+              <span class="info-value">  {{org.email}}</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Contact Phone:</span>
+              <span class="info-value"> {{org.kontaktTelefon}}</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Address:</span>
+                <span class="info-value"> {{org.adresa}}</span>
+              </div>
+          </div>
 </div>
+
 <!--festivals-->
+<div id="fest-sign">Festivals:</div>
     <div *ngFor="let item of data">
-        <div class="festival col-12" [style.backgroundImage]="'url(' + item.slike[0] + ')'" (click)="festSelected(item.ID,item.naziv)">
+        <div class="festival col-12" [style.backgroundImage]="'url(' + item.slike[0] + ')'" (click)="festSelected(item.ID)">
             {{item.naziv}}
         </div>
     </div>

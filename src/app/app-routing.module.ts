@@ -5,8 +5,8 @@ import { FestivalsComponent } from './menus/festivals/festivals.component';
 import { FestInfoComponent } from './menus/fest-info/fest-info.component';
 const routes: Routes = [
   { path: '', component: MainMenuComponent },
-  { path: 'organisation/:name/:id', component: FestivalsComponent },
-  { path: 'festival/:name', component: FestInfoComponent },
+  { path: 'organisation/:id', component: FestivalsComponent },
+  { path: 'festival/:orgID/:id', component: FestInfoComponent },
 ];
 
 @NgModule({
