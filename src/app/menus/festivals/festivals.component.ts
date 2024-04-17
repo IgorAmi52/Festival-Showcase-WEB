@@ -25,17 +25,17 @@ export class FestivalsComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private ApiService: FirebaseApiService
+    private apiService: FirebaseApiService
   ) {}
 
   ngOnInit(): void {
     const orgID = this.route.snapshot.params['id'];
 
-    this.ApiService.getOrganisation(orgID).subscribe(
+    this.apiService.getOrganisation(orgID).subscribe(
       (orgData) => {
         this.org = { ...orgData, ID: orgID };
 
-        this.ApiService.getFestivals(this.org.festivali).subscribe(
+        this.apiService.getFestivals(this.org.festivali).subscribe(
           (festivals) => {
             for (let id in festivals) {
               const festival = { ...festivals[id], ID: id };

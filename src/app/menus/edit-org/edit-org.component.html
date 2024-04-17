@@ -1,0 +1,139 @@
+
+<div class="modal fade show"  id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Edit Organisation:</h5>
+          <button type="button" class="btn btn-outline-dark right" data-dismiss="modal" aria-label="Close" (click)="closeModal('#editModal')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <!--body-->
+        <div class="modal-body">
+         
+          <div class="container-fluid">
+            <div class="row">
+              <!--this is the organisation form-->
+              <div class="col-lg-6 col-12">
+                <div [style.backgroundImage]="'url(' + org.logo + ')'" id="logoImage"></div>
+                <form [formGroup]="orgForm" ngNativeValidate (ngSubmit)="onSubmit()" #myForm>
+                  <div class="form-group">
+                    <label for="naziv">Name:</label>
+                    <input type="text" id="naziv" formControlName="naziv" required="true" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="logo">Logo URL:</label>
+                    <input type="logo" id="logo" formControlName="logo" required="true" class="form-control">
+      
+                  </div>
+                  <div class="form-group">
+                    <label for="adresa">Address:</label>
+                    <input type="text" id="adresa" formControlName="adresa" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="godinaOsnivanja">Year of making:</label>
+                    <input type="year" id="godinaOsnivanja" formControlName="godinaOsnivanja" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Contact Email:</label>
+                    <input type="text" id="email" formControlName="email" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="kontaktTelefon">Contact Phone:</label>
+                    <input type="phone" id="kontaktTelefon" formControlName="kontaktTelefon" class="form-control" required>
+                  </div>
+               
+               
+                  <button type="button" class="btn btn-secondary footer-btn" data-toggle="modal" (click)="openModal('#deleteModal','Organisation')">Delete</button>
+                  <button type="submit" class="btn btn-primary footer-btn">Save</button>
+                </form>
+              </div>
+           
+              <div class="col-lg-6 col-12">
+                <!--selection of festival-->
+                <h5 style="text-align: center; margin-bottom:10px">Festivals</h5>
+                <select class="form-select" size="3" aria-label="size 3 select" [(ngModel)]="selectedFestName" [ngModelOptions]="{standalone: true}" (change)="festSelected()">
+                  <option *ngFor="let fest of festivals">{{fest.naziv}}</option>
+                </select>
+                <!--festival form-->
+                <div >
+                  <form [formGroup]="festForm" ngNativeValidate (ngSubmit)="addFestival()" #myForm>
+                    <div class="form-group">
+                      <label for="naziv">Name:</label>
+                      <input type="text" id="naziv" formControlName="naziv" required="true" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="opis">Description:</label>
+                      <input type="text" id="opis" formControlName="opis" required="true" class="form-control">
+        
+                    </div>
+                    <div class="form-group">
+                      <label for="tip">Type:</label>
+                      <input type="text" id="tip" formControlName="tip" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="prevoz">Transportation:</label>
+                      <input type="text" id="prevoz" formControlName="prevoz" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="cena">Price:</label>
+                      <input type="number" id="cena" formControlName="cena" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="maxOsoba">Capacity:</label>
+                      <input type="number" id="maxOsoba" formControlName="maxOsoba" class="form-control" required>
+                    </div>
+                    <!--adding image urls to festivals-->
+                    <div class="container-fluid" style="margin-top: 10px;">
+                      <div class="row">
+                        <div class="col-8" style="padding: 0">
+                          <label>Image URLs:</label>
+                          <input type="text" class="form-control" #inputURL>
+                        </div>
+                        <div class="col-4">
+                          <button type="button" class="btn btn-sm btn-primary" style="margin-top: 30%;" [disabled]="inputURL.value==''" (click)="addImageFestURL(inputURL.value)">Add</button>
+                        </div>
+                      </div>
+                      <div class="row" style="margin-top: 10px;" *ngIf="images.length>0">
+                        <div class="col-8" style="padding: 0;">
+                          <select class="form-select" size="3" aria-label="size 3 select example" [(ngModel)]="selImgURL" [ngModelOptions]="{standalone: true}">
+                            <option *ngFor="let image of images">{{image}}</option>
+                          </select>
+                        </div>
+                       <div class="col-4">
+                        <button type="button" class="btn btn-sm btn-secondary" style="margin-top: 30%;" *ngIf="selImgURL!=''" (click)="delImageFestURL()">Delete</button>
+                       </div>
+                      </div>
+                    </div>
+                   
+                    <button type="button" class="btn btn-sm btn-secondary footer-btn" data-toggle="modal" (click)="openModal('#deleteModal','Festival')" *ngIf="selectedFestName!=''">Delete Festival</button>
+                    <button type="button" class="btn btn-sm btn-primary footer-btn" *ngIf="selectedFestName!=''" (click)="updateFest()" [disabled]="!festForm.valid">Save Festival</button>
+                    <button type="reset" class="btn btn-sm  btn-primary footer-btn" *ngIf="selectedFestName!=''" (click)="resetFestForm()">Add New Festival</button>
+                    <button type="submit" class="btn btn-sm  btn-primary footer-btn" *ngIf="selectedFestName==''">Add Festival</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Delete modal -->
+
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content" >
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
+          <button type="button" class="btn btn-outline-dark right" data-dismiss="modal" aria-label="Close" (click)="closeModal('#deleteModal')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal('#deleteModal')">Close</button>
+          <button type="button" class="btn btn-primary" (click)="deleteOrg()">Delete {{deleteLabel}}</button>
+        </div>
+      </div>
+    </div>
+  </div>

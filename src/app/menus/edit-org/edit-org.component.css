@@ -1,0 +1,14 @@
+.right{
+    position: absolute;
+    right: 3%;
+}
+.footer-btn{
+    margin:3px;
+    margin-top: 8px;
+}
+#logoImage{
+    width: 100%;
+    height: 150px;
+    background-size: cover; /* Cover the circle with the background image */
+    background-position: center;
+}

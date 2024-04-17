@@ -35,4 +35,9 @@ export class FirebaseApiService {
         '.json'
     );
   }
+  getUsers(): Observable<any> {
+    return this.https.get(
+      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/data/korisnici.json'
+    );
+  }
 }

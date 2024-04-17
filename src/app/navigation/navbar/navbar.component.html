@@ -1,11 +1,28 @@
-
-    <nav class="navbar navbar-dark bg-dark shadow-shorter">
-        <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img src="assets/output-onlinegiftools.gif" alt="Logo" height="60" class="d-inline-block align-top"> <!-- Adjust height as needed -->
-        </a>
-        <!-- Other navbar items go here -->
-        </div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" [routerLink]="['/']">
+      <img src="assets/output-onlinegiftools.gif" alt="Logo" height="60" class="d-inline-block align-top">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Admin
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" [routerLink]="['/admin/users']">Config Users</a>
+            <a class="dropdown-item" [routerLink]="['/admin/organisations']">Config Organisations</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/login']">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/register']">Register</a>
+        </li>
+      </ul>
+    </div>
   </nav>
-
-   
+  

@@ -21,14 +21,14 @@ export class FestInfoComponent implements OnInit {
   };
 
   constructor(
-    private ApiService: FirebaseApiService,
+    private apiService: FirebaseApiService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     let orgID = this.route.snapshot.params['orgID'];
     let festID = this.route.snapshot.params['id'];
-    this.ApiService.getFestival(orgID, festID).subscribe(
+    this.apiService.getFestival(orgID, festID).subscribe(
       (festData) => {
         this.fest = { ...festData, id: festID };
       },

@@ -1,23 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
 import { Organisation } from 'src/app/models/organisation.interface';
 import { FirebaseApiService } from 'src/app/networking/firebase-api.service';
 
 @Component({
-  selector: 'app-main-menu',
-  templateUrl: './main-menu.component.html',
-  styleUrls: ['./main-menu.component.css'],
+  selector: 'app-admin-org',
+  templateUrl: './admin-org.component.html',
+  styleUrls: ['./admin-org.component.css'],
 })
-export class MainMenuComponent implements OnInit {
-  data: Array<Organisation> = [];
-  constructor(private apiService: FirebaseApiService, private router: Router) {}
+export class AdminOrgComponent implements OnInit {
+  organisations: Array<Organisation> = [];
+  selectedOrg: Subject<any> = new Subject();
+  constructor(private apiService: FirebaseApiService) {}
 
   ngOnInit(): void {
     this.apiService.getOrganisations().subscribe(
       (organisations) => {
         for (let id in organisations) {
           const organisation = { ...organisations[id], ID: id };
-          this.data.push(organisation);
+          this.organisations.push(organisation);
         }
       },
       (err) => {
@@ -25,7 +26,7 @@ export class MainMenuComponent implements OnInit {
       }
     );
   }
-  orgSelected(selectedOrgID: String) {
-    this.router.navigate(['organisation', selectedOrgID]);
+  orgSelected(organisation: Organisation) {
+    this.selectedOrg.next(organisation);
   }
 }

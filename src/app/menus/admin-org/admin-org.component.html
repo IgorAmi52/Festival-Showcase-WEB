@@ -1,0 +1,32 @@
+<div style="height: 30px;"></div>
+<div class="container-fluid responsive">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10 responsive">
+            <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Year of making</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let org of organisations" style="cursor: pointer;" (click)="orgSelected(org)">     
+                    <td>{{org.naziv}}</td>
+                    <td>{{org.adresa}}</td>
+                    <td>{{org.godinaOsnivanja}}</td>
+                    <td>{{org.email}}</td>
+                    <td>{{org.kontaktTelefon}}</td>
+
+                  </tr>  
+                </tbody>
+              </table>
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>
+<app-edit-org [orgInput]="selectedOrg"></app-edit-org>

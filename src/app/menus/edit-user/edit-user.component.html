@@ -1,0 +1,73 @@
+
+  <div class="modal fade show"  id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Edit User:</h5>
+          <button type="button" class="btn btn-outline-dark right" data-dismiss="modal" aria-label="Close" (click)="closeModal('#editModal')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="userForm" ngNativeValidate (ngSubmit)="onSubmit()" #myForm>
+                <div class="form-group">
+                  <label for="korisnickoIme">User Name:</label>
+                  <input type="text" id="korisnickoIme" formControlName="korisnickoIme" required="true" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="lozinka">Password:</label>
+                  <input type="password" id="lozinka" formControlName="lozinka" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label for="ime">First Name:</label>
+                  <input type="text" id="ime" formControlName="ime" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label for="prezime">Last Name:</label>
+                  <input type="text" id="prezime" formControlName="prezime" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email:</label>
+                  <input type="email" id="email" formControlName="email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label for="datumRodjenja">Date of Birth:</label>
+                  <input type="date" id="datumRodjenja" formControlName="datumRodjenja" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label for="adresa">Address:</label>
+                  <input type="text" id="adresa" formControlName="adresa" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label for="telefon">Phone:</label>
+                  <input type="tel" id="telefon" formControlName="telefon" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="zanimanje">Proffesion:</label>
+                  <input type="text" id="zanimanje" formControlName="zanimanje" class="form-control" required>
+                </div>
+                <button type="button" class="btn btn-secondary footer-btn" data-toggle="modal" (click)="openModal('#deleteModal')" >Delete</button>
+                <button type="submit" class="btn btn-primary footer-btn">Save</button>
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Button trigger modal -->
+
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content" >
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
+          <button type="button" class="btn btn-outline-dark right" data-dismiss="modal" aria-label="Close" (click)="closeModal('#deleteModal')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal('#deleteModal')">Close</button>
+          <button type="button" class="btn btn-primary" (click)="deleteUser()">Delete User</button>
+        </div>
+      </div>
+    </div>
+  </div>

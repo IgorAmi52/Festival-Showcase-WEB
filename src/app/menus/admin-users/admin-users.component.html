@@ -1,0 +1,36 @@
+<div style="height: 30px;"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10 responsive">
+            <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">User Name</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Password</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Date of birth</th>
+                    <th scope="col">Proffesion</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let user of users" style="cursor: pointer;" (click)="userSelected(user)">     
+                    <td>{{user.korisnickoIme}}</td>
+                    <td>{{user.ime}}</td>
+                    <td>{{user.prezime}}</td>
+                    <td>{{user.lozinka}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.telefon}}</td>
+                    <td>{{user.datumRodjenja}}</td>
+                    <td>{{user.zanimanje}}</td>
+                  </tr>  
+                </tbody>
+              </table>
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>
+<app-edit-user [userInput]="selectedUser"></app-edit-user>
