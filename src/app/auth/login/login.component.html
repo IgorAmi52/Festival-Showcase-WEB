@@ -1,1 +1,27 @@
-<p>login works!</p>
+
+
+<div class="modal fade show"  id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Edit User:</h5>
+          <button type="button" class="btn btn-outline-dark right" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="userForm" ngNativeValidate (ngSubmit)="onSubmit()" #myForm>
+                <div class="form-group">
+                  <label for="korisnickoIme">User Name:</label>
+                  <input type="text" id="korisnickoIme" formControlName="korisnickoIme" required="true" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="lozinka">Password:</label>
+                  <input type="password" id="lozinka" formControlName="lozinka" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary footer-btn">Login</button>
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>

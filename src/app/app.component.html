@@ -1,5 +1,7 @@
 <div id="wrapper">
-    <app-navbar id="nav"></app-navbar>
+    <app-navbar id="nav" (loginEmmiter)="loginEmmited()" (registerEmmiter)="registerEmmited()"></app-navbar>
+    <app-login [loginEmmiter]="loginEmmiter"></app-login>
+    <app-register [registerEmmiter]="registerEmmiter"></app-register>
     <div id="content">
     <router-outlet id="router"></router-outlet>
     </div>      

@@ -1,1 +1,64 @@
-<p>register works!</p>
+
+
+<div class="modal fade show"  id="registerModal" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Edit User:</h5>
+          <button type="button" class="btn btn-outline-dark right" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="userForm" ngNativeValidate (ngSubmit)="onSubmit()" #myForm>
+                <div class="form-group">
+                    <label for="korisnickoIme">User Name:</label>
+                    <input type="text" class="form-control" id="korisnickoIme" formControlName="korisnickoIme" required>
+                  </div>
+                
+                  <div class="form-group">
+                    <label for="lozinka">Password:</label>
+                    <input type="password" class="form-control" id="lozinka" formControlName="lozinka" required>
+                  </div>
+                
+                  <div class="form-group">
+                    <label for="ime">Name:</label>
+                    <input type="text" class="form-control" id="ime" formControlName="ime" required>
+                  </div>
+                
+                  <div class="form-group">
+                    <label for="prezime">Lastname:</label>
+                    <input type="text" class="form-control" id="prezime" formControlName="prezime" required>
+                  </div>
+                
+                  <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" id="email" formControlName="email" required>
+                  </div>
+                
+                  <div class="form-group">
+                    <label for="datumRodjenja">Date of Birth:</label>
+                    <input type="date" class="form-control" id="datumRodjenja" formControlName="datumRodjenja">
+                  </div>
+                
+                  <div class="form-group">
+                    <label for="adresa">Address:</label>
+                    <input type="text" class="form-control" id="adresa" formControlName="adresa" required>
+                  </div>
+                
+                  <div class="form-group">
+                    <label for="telefon">Phone:</label>
+                    <input type="text" class="form-control" id="telefon" formControlName="telefon" pattern="\d+">
+                  </div>
+                
+                  <div class="form-group">
+                    <label for="zanimanje">Proffesion:</label>
+                    <input type="text" class="form-control" id="zanimanje" formControlName="zanimanje" required>
+                  </div>
+                
+                <button type="submit" class="btn btn-primary footer-btn">Login</button>
+              </form>
+        </div>
+      </div>
+    </div>
+  </div>

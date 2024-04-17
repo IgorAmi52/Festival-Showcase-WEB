@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -7,6 +8,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
+  @Output()
+  loginEmmiter = new EventEmitter();
+  @Output()
+  registerEmmiter = new EventEmitter();
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
@@ -16,5 +21,11 @@ export class NavbarComponent implements OnInit {
   }
   configOrg() {
     this.router.navigate(['admin', 'organisations']);
+  }
+  openLogin() {
+    this.loginEmmiter.emit(1);
+  }
+  openRegister() {
+    this.registerEmmiter.emit(1);
   }
 }
