@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { Organisation } from 'src/app/models/organisation.interface';
 import { FirebaseApiService } from 'src/app/networking/firebase-api.service';
@@ -11,7 +12,7 @@ import { FirebaseApiService } from 'src/app/networking/firebase-api.service';
 export class AdminOrgComponent implements OnInit {
   organisations: Array<Organisation> = [];
   selectedOrg: Subject<any> = new Subject();
-  constructor(private apiService: FirebaseApiService) {}
+  constructor(private apiService: FirebaseApiService, private router: Router) {}
 
   ngOnInit(): void {
     this.apiService.getOrganisations().subscribe(
@@ -23,6 +24,7 @@ export class AdminOrgComponent implements OnInit {
       },
       (err) => {
         console.log(err);
+        this.router.navigate(['no-internet']);
       }
     );
   }

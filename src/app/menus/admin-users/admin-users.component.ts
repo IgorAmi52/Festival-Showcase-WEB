@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FirebaseApiService } from 'src/app/networking/firebase-api.service';
 import { User } from '../../models/user.interface';
 import { Observable, Subject } from 'rxjs';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-admin-users',
   templateUrl: './admin-users.component.html',
@@ -11,7 +12,7 @@ export class AdminUsersComponent implements OnInit {
   users: Array<User> = [];
   selectedUser: Subject<any> = new Subject();
 
-  constructor(private apiService: FirebaseApiService) {}
+  constructor(private apiService: FirebaseApiService, private router: Router) {}
 
   ngOnInit(): void {
     this.apiService.getUsers().subscribe(
@@ -21,6 +22,7 @@ export class AdminUsersComponent implements OnInit {
         }
       },
       (err) => {
+        this.router.navigate(['no-internet']);
         console.log(err);
       }
     );

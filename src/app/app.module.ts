@@ -6,6 +6,7 @@ import { MenusModule } from './menus/menus.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { AuthModule } from './auth/auth.module';
 import { AppComponent } from './app.component';
+import { ExceptionsModule } from './exceptions/exceptions.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -15,6 +16,7 @@ import { AppComponent } from './app.component';
     NavigationModule,
     MenusModule,
     AuthModule,
+    ExceptionsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

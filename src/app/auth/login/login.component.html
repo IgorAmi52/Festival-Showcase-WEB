@@ -13,11 +13,11 @@
             <form [formGroup]="userForm" ngNativeValidate (ngSubmit)="onSubmit()" #myForm>
                 <div class="form-group">
                   <label for="korisnickoIme">User Name:</label>
-                  <input type="text" id="korisnickoIme" formControlName="korisnickoIme" required="true" class="form-control">
+                  <input type="text"  formControlName="korisnickoIme" required="true" class="form-control">
                 </div>
                 <div class="form-group">
                   <label for="lozinka">Password:</label>
-                  <input type="password" id="lozinka" formControlName="lozinka" class="form-control" required>
+                  <input type="password" formControlName="lozinka" class="form-control" required>
                 </div>
                 <button type="submit" class="btn btn-primary footer-btn">Login</button>
               </form>

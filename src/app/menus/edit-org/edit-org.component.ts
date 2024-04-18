@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { Festival } from 'src/app/models/festival.interface';
 import { Organisation } from 'src/app/models/organisation.interface';
@@ -129,7 +130,9 @@ export class EditOrgComponent implements OnInit {
     this.festForm.reset();
   }
   closeModal(id: String) {
-    this.resetFestForm();
+    if (id == '#editModal') {
+      this.resetFestForm();
+    }
     $(id).modal('hide');
   }
   openModal(id: String, label: String) {
@@ -137,13 +140,20 @@ export class EditOrgComponent implements OnInit {
       this.closeModal('#editModal');
       this.deleteLabel = label;
     }
-
     $(id).modal('show');
   }
 
-  deleteOrg() {
+  deleteEntity() {
     // to be implemented
     this.closeModal('#deleteModal');
+    if (this.deleteLabel == 'Festival') {
+      this.festivals = this.festivals.filter(
+        (item) => item.naziv != this.selectedFestName
+      );
+      $('#editModal').modal('show');
+    }
+    console.log(this.festivals);
+    this.resetFestForm();
   }
   onSubmit() {
     this.closeModal('#editModal');

@@ -9,7 +9,9 @@ import { FirebaseApiService } from 'src/app/networking/firebase-api.service';
   styleUrls: ['./main-menu.component.css'],
 })
 export class MainMenuComponent implements OnInit {
-  data: Array<Organisation> = [];
+  orgs: Array<Organisation> = [];
+  filteredOrgs: Array<Organisation> = [];
+  filter: string = '';
   constructor(private apiService: FirebaseApiService, private router: Router) {}
 
   ngOnInit(): void {
@@ -17,15 +19,29 @@ export class MainMenuComponent implements OnInit {
       (organisations) => {
         for (let id in organisations) {
           const organisation = { ...organisations[id], ID: id };
-          this.data.push(organisation);
+          this.orgs.push(organisation);
         }
+        this.filteredOrgs = [...this.orgs];
       },
       (err) => {
+        this.router.navigate(['no-internet']);
         console.log(err);
       }
     );
   }
   orgSelected(selectedOrgID: String) {
     this.router.navigate(['organisation', selectedOrgID]);
+  }
+  filterOrgs() {
+    let filteredArr = [];
+
+    for (let i = 0; i < this.orgs.length; i++) {
+      if (
+        this.orgs[i].naziv.toUpperCase().includes(this.filter.toUpperCase())
+      ) {
+        filteredArr.push(this.orgs[i]);
+      }
+    }
+    this.filteredOrgs = [...filteredArr];
   }
 }

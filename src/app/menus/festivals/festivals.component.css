@@ -49,3 +49,16 @@
   .festival:hover{
     height: 65vh;
   }
+  #search{
+    position: sticky;
+    top: 85px;
+  
+    padding-bottom: 30px;
+    min-height: 85px;
+    width: 100%;
+    text-align: center;
+    background-color: #2A324B;;
+    color: white;
+    font-size: 18px;
+    font-weight: 400;
+  }

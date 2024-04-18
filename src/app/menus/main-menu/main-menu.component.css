@@ -1,14 +1,14 @@
 
 .organisation {
     height: 30%; 
-    border-top-left-radius:  150px;
-    border-bottom-left-radius:150px;
     background-color: #E1E5EE; 
-    transition: border-top-right-radius 0.3s, border-bottom-right-radius 0.3s,background-color 0.3s; 
+    transition: border-top-right-radius 0.3s,border-top-left-radius 0.3s,border-bottom-left-radius 0.3s, border-bottom-right-radius 0.3s,background-color 0.3s; 
 }
 .organisation:hover {
     border-top-right-radius: 150px; /* Set border-radius to create half-circle */
     border-bottom-right-radius: 150px;
+    border-top-left-radius:  150px;
+    border-bottom-left-radius:150px;
     background-color:white;
   }
 .circle {
@@ -42,4 +42,16 @@
   .value {
     margin-left: 10px;
     color: #666; /* Optional: Change value color */
+  }
+  #search{
+    position: fixed;
+    padding-top: 10px;
+    padding-right: 10px;
+    height: 60px;
+    width: 100%;
+    text-align: center;
+    background-color: #2A324B;;
+    color: white;
+    font-size: 18px;
+    font-weight: 400;
   }

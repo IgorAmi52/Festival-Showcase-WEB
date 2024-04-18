@@ -1,11 +1,15 @@
-<div style="height: 40px;"></div>
+<div id="search">   
+    <input type="text" placeholder="Filter" [(ngModel)]="filter" (keyup)="filterOrgs()">
+</div>
+<div style="height: 70px;"></div>
+
 <!-- content-->
 <div class="container-fluid">
-    <div class="row" *ngFor="let item of data">
-        <div class="col-lg-2">    
+    <div class="row" *ngFor="let item of filteredOrgs">
+        <div class="col-sm-3 col-lg-2">    
         </div>
         <!-- one organisation-->
-        <div class="col-lg-8 organisation mb-5" style="cursor: pointer;" (click)="orgSelected(item.ID)">
+        <div class="col-sm-6 col-lg-8 organisation mb-5" style="cursor: pointer;" (click)="orgSelected(item.ID)">
            <div class="container-fluid">
             <div class="row">
                 <!-- image-->
@@ -17,7 +21,7 @@
                 <div class="col-lg-10 col-sm-12" id="info">
                      <!-- header-->
                    <div id="header">
-                    <div style=" text-transform: uppercase;">{{item.naziv}}</div>
+                    <div style=" text-transform: uppercase;" [innerHTML]="item.naziv|highlightSearch:filter"></div>
                     <div id="godina">Since {{item.godinaOsnivanja}}</div>
                    </div> 
                     <!-- contacts & email-->
@@ -40,7 +44,7 @@
            </div>
            <!-- end of organistion-->
         </div>
-        <div class="col-lg-2">
+        <div class="col-sm-3 col-lg-2">
         </div>
       </div>
 </div>

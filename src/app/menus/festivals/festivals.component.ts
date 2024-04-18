@@ -21,7 +21,11 @@ export class FestivalsComponent implements OnInit {
   };
   festIDs: String;
   orgName: String;
-  data: Array<Festival> = [];
+  fests: Array<Festival> = [];
+  filteredFests: Array<Festival> = [];
+  filterName: string = '';
+  filterType: string = '';
+  filterTransport: string = '';
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -39,10 +43,12 @@ export class FestivalsComponent implements OnInit {
           (festivals) => {
             for (let id in festivals) {
               const festival = { ...festivals[id], ID: id };
-              this.data.push(festival);
+              this.fests.push(festival);
             }
+            this.filteredFests = [...this.fests];
           },
           (err) => {
+            this.router.navigate(['no-internet']);
             console.log(err);
           }
         );
@@ -54,5 +60,25 @@ export class FestivalsComponent implements OnInit {
   }
   festSelected(festID: String) {
     this.router.navigate(['festival', this.org.festivali, festID]);
+  }
+  filterFests() {
+    let filteredArr = [];
+
+    for (let i = 0; i < this.fests.length; i++) {
+      if (
+        this.fests[i].naziv
+          .toUpperCase()
+          .includes(this.filterName.toUpperCase()) &&
+        this.fests[i].tip
+          .toUpperCase()
+          .includes(this.filterType.toUpperCase()) &&
+        this.fests[i].prevoz
+          .toUpperCase()
+          .includes(this.filterTransport.toUpperCase())
+      ) {
+        filteredArr.push(this.fests[i]);
+      }
+    }
+    this.filteredFests = [...filteredArr];
   }
 }

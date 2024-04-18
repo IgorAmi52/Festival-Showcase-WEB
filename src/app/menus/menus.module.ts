@@ -8,6 +8,7 @@ import { AdminUsersComponent } from './admin-users/admin-users.component';
 import { AdminOrgComponent } from './admin-org/admin-org.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { EditOrgComponent } from './edit-org/edit-org.component';
+import { HighlightSearchPipe } from './highlight-search.pipe';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { EditOrgComponent } from './edit-org/edit-org.component';
     AdminOrgComponent,
     EditUserComponent,
     EditOrgComponent,
+    HighlightSearchPipe,
   ],
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
   exports: [
