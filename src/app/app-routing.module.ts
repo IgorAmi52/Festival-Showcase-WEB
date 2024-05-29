@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'festival/:orgID/:id', component: FestInfoComponent },
   { path: 'admin/users', component: AdminUsersComponent },
   { path: 'admin/organisations', component: AdminOrgComponent },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({

@@ -11,21 +11,28 @@ import { Router } from '@angular/router';
 export class AdminUsersComponent implements OnInit {
   users: Array<User> = [];
   selectedUser: Subject<any> = new Subject();
-
-  constructor(private apiService: FirebaseApiService, private router: Router) {}
+  userRefresh: Subject<any>;
+  constructor(private apiService: FirebaseApiService, private router: Router) {
+    this.userRefresh = apiService.getUserRefreshSubject();
+  }
 
   ngOnInit(): void {
-    this.apiService.getUsers().subscribe(
-      (users) => {
-        for (let id in users) {
-          this.users.push({ ...users[id], ID: id });
+    this.userRefresh.subscribe(() => {
+      this.apiService.getUsers().subscribe(
+        (users) => {
+          this.users = [];
+          for (let id in users) {
+            this.users.push({ ...users[id], ID: id });
+          }
+        },
+        (err) => {
+          this.router.navigate(['no-internet']);
+          console.log(err);
         }
-      },
-      (err) => {
-        this.router.navigate(['no-internet']);
-        console.log(err);
-      }
-    );
+      );
+    });
+
+    this.userRefresh.next();
   }
   userSelected(user: User) {
     this.selectedUser.next(user);

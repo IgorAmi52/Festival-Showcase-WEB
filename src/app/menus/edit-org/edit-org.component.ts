@@ -1,5 +1,12 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  Form,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { Festival } from 'src/app/models/festival.interface';
@@ -13,7 +20,12 @@ declare var $: any;
   styleUrls: ['./edit-org.component.css'],
 })
 export class EditOrgComponent implements OnInit {
+  selectFest($event: any) {
+    throw new Error('Method not implemented.');
+  }
   @Input() orgInput: Subject<any>;
+  orgRefresh: Subject<any>;
+  screenRefresh: Subject<any> = new Subject();
   org: Organisation = {
     ID: undefined,
     naziv: undefined,
@@ -31,6 +43,7 @@ export class EditOrgComponent implements OnInit {
   selImgURL: String = '';
   deleteLabel: String = '';
   @ViewChild('inputURL') inputURL: any;
+
   constructor(private fb: FormBuilder, private apiService: FirebaseApiService) {
     this.orgForm = this.fb.group({
       naziv: ['', Validators.required],
@@ -38,26 +51,31 @@ export class EditOrgComponent implements OnInit {
       godinaOsnivanja: ['', Validators.required],
       logo: [''], // You may add validators here if needed
       kontaktTelefon: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.email, Validators.required]],
       festivali: [''], // You may add validators here if needed
     });
     this.festForm = this.fb.group({
       naziv: ['', Validators.required],
       opis: ['', Validators.required],
-      slike: [[]], // Empty array
+      slike: this.fb.array([]), // Empty array
       tip: ['', Validators.required],
       prevoz: [''],
       cena: ['', Validators.required],
       maxOsoba: ['', Validators.required],
     });
+    this.orgRefresh = apiService.getOrgRefreshSubject();
   }
 
   ngOnInit(): void {
     this.orgInput.subscribe((org: Organisation) => {
       this.org = org;
-      this.festivals = [];
-      this.apiService.getFestivals(org.festivali).subscribe(
+
+      this.screenRefresh.next();
+    });
+    this.screenRefresh.subscribe(() => {
+      this.apiService.getFestivals(this.org.festivali).subscribe(
         (festivals) => {
+          this.festivals = [];
           for (let i in festivals) {
             const festival = { ...festivals[i], ID: i };
             this.festivals.push(festival);
@@ -74,24 +92,25 @@ export class EditOrgComponent implements OnInit {
     this.backingFixed();
   }
   get images(): Array<String> {
-    if (this.festForm.get('slike').value) {
-      return this.festForm.get('slike').value;
-    }
-    return [];
+    return this.festForm.get('slike').value;
   }
   addImageFestURL(newURL: String) {
     this.inputURL.nativeElement.value = '';
-    let arr = this.images;
-    arr.push(newURL);
-    this.festForm.get('slike').setValue(arr);
+    const images = this.festForm.get('slike') as FormArray;
+    images.push(new FormControl(newURL));
   }
   delImageFestURL() {
-    let arr = this.images;
-    arr = arr.filter((item) => item != this.selImgURL);
-    this.festForm.get('slike').setValue(arr);
-    this.selImgURL = '';
+    const images = this.festForm.get('slike') as FormArray;
+    const index = images.controls.findIndex(
+      (control) => control.value === this.selImgURL
+    );
+    if (index !== -1) {
+      images.removeAt(index);
+    }
   }
-  festSelected() {
+  festSelected($event) {
+    this.selectedFestName = $event.target.value;
+
     let editFest: Festival;
     for (let i in this.festivals) {
       if (this.festivals[i].naziv == this.selectedFestName) {
@@ -100,10 +119,13 @@ export class EditOrgComponent implements OnInit {
       }
     }
     this.festForm.patchValue(editFest);
+    var images = this.festForm.get('slike') as FormArray;
+    for (const image of editFest.slike) {
+      images.push(new FormControl(image));
+    }
   }
   addFestival() {
     // just adding to array not really adding a festival
-
     this.festivals.push({
       ...this.festForm.value,
       ID: Math.random().toString(36).slice(2),
@@ -112,28 +134,65 @@ export class EditOrgComponent implements OnInit {
   }
   updateFest() {
     if (this.festForm.valid) {
-      for (let i = 0; i <= this.festivals.length; i++) {
-        if (this.festivals[i].naziv == this.selectedFestName) {
-          this.festivals.splice(i, 1, {
-            ...this.festForm.value,
-            ID: this.festivals[i].ID,
-          });
-          break;
-        }
-      }
+      const formValue = this.festForm.value;
+      var formValueJson = JSON.stringify(formValue);
+      /// i want to add a property slike that is equal to this.images which is a Array of strings
+      this.apiService.editFestival(
+        this.org.festivali,
+        this.getSelectedFestID(),
+        formValueJson
+      );
       this.resetFestForm();
+    }
+  }
+
+  deleteEntity() {
+    if (this.deleteLabel == 'Festival') {
+      const festID = this.getSelectedFestID();
+
+      this.apiService.deleteFestival(this.org.festivali, festID).subscribe(
+        () => {
+          this.closeModal('#deleteModal');
+          this.screenRefresh.next();
+
+          $('#editModal').modal('show');
+          this.resetFestForm();
+          this.selectedFestName = '';
+        },
+        (err) => {
+          console.log('gaas');
+        }
+      );
+    } else {
+      this.apiService.deleteOrganisation(this.org.ID).subscribe(() => {
+        this.orgRefresh.next();
+        this.resetFestForm();
+        this.selectedFestName = '';
+        this.closeModal('#deleteModal');
+        this.apiService.deleteFestivals(this.org.ID);
+      });
+    }
+  }
+  onSubmit() {
+    this.closeModal('#editModal');
+  }
+  getSelectedFestID() {
+    for (let i = 0; i < this.festivals.length; i++) {
+      if (this.festivals[i].naziv == this.selectedFestName) {
+        return this.festivals[i].ID;
+      }
     }
   }
   resetFestForm() {
-    this.selectedFestName = '';
-    this.festForm.get('slike').setValue([]);
+    var images = this.festForm.get('slike') as FormArray;
+    while (images.length !== 0) {
+      images.removeAt(0);
+    }
     this.festForm.reset();
   }
   closeModal(id: String) {
-    if (id == '#editModal') {
-      this.resetFestForm();
-    }
     $(id).modal('hide');
+    this.resetFestForm();
   }
   openModal(id: String, label: String) {
     if (id == '#deleteModal') {
@@ -143,21 +202,6 @@ export class EditOrgComponent implements OnInit {
     $(id).modal('show');
   }
 
-  deleteEntity() {
-    // to be implemented
-    this.closeModal('#deleteModal');
-    if (this.deleteLabel == 'Festival') {
-      this.festivals = this.festivals.filter(
-        (item) => item.naziv != this.selectedFestName
-      );
-      $('#editModal').modal('show');
-    }
-    console.log(this.festivals);
-    this.resetFestForm();
-  }
-  onSubmit() {
-    this.closeModal('#editModal');
-  }
   backingFixed() {
     $(document).ready(function () {
       $('div.modal').on('show.bs.modal', function () {

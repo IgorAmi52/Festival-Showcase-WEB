@@ -2,6 +2,7 @@ import { group } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { FirebaseApiService } from 'src/app/networking/firebase-api.service';
 
 declare var $: any;
 @Component({
@@ -12,7 +13,10 @@ declare var $: any;
 export class RegisterComponent implements OnInit {
   @Input() registerEmmiter: Subject<any>;
   userForm: FormGroup;
-  constructor(private fb: FormBuilder) {
+  userRefresh: Subject<any>;
+  constructor(private fb: FormBuilder, private apiService: FirebaseApiService) {
+    this.userRefresh = apiService.getUserRefreshSubject();
+
     this.userForm = this.fb.group({
       korisnickoIme: ['', Validators.required],
       lozinka: ['', Validators.required],
@@ -33,10 +37,23 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    this.closeModal();
+    if (this.userForm.valid) {
+      const formValue = this.userForm.value;
+      const formValueJson = JSON.stringify(formValue);
+      this.apiService.addUser(formValueJson).subscribe(
+        () => {
+          this.userRefresh.next();
+          this.closeModal();
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    }
   }
 
   closeModal() {
+    this.userForm.reset();
     $('#registerModal').modal('hide');
   }
 

@@ -1,4 +1,5 @@
 export interface User {
+  ID: String;
   korisnickoIme: String;
   lozinka: String;
   ime: String;

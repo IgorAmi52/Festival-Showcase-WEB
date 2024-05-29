@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { User } from 'src/app/models/user.interface';
+import { FirebaseApiService } from 'src/app/networking/firebase-api.service';
 
 declare var $: any;
 @Component({
@@ -17,11 +18,14 @@ declare var $: any;
 })
 export class EditUserComponent implements OnInit {
   @Input() userInput: Subject<any>;
+  userRefresh: Subject<any>;
   @ViewChild('myForm') myForm: NgForm;
   user: User;
   userForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private apiService: FirebaseApiService) {
+    this.userRefresh = apiService.getUserRefreshSubject();
+
     this.userForm = this.fb.group({
       korisnickoIme: ['', Validators.required],
       lozinka: ['', Validators.required],
@@ -57,11 +61,25 @@ export class EditUserComponent implements OnInit {
   }
 
   deleteUser() {
-    // to be implemented
-    this.closeModal('#deleteModal');
+    this.apiService.deleteUser(this.user.ID).subscribe(
+      () => {
+        this.userRefresh.next();
+        this.closeModal('#deleteModal');
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
   onSubmit() {
-    this.closeModal('#editModal');
+    if (this.userForm.valid) {
+      const formValue = this.userForm.value;
+      const formValueJson = JSON.stringify(formValue);
+      this.apiService.editUser(this.user.ID, formValueJson).subscribe(() => {
+        this.userRefresh.next();
+        this.closeModal('#editModal');
+      });
+    }
   }
   backingFixed() {
     $(document).ready(function () {
