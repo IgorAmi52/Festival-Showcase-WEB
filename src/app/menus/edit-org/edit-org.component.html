@@ -108,7 +108,7 @@
                    
                     <button type="button" class="btn btn-sm btn-secondary footer-btn" data-toggle="modal" (click)="openModal('#deleteModal','Festival')" *ngIf="selectedFestName!=''">Delete Festival</button>
                     <button type="button" class="btn btn-sm btn-primary footer-btn" *ngIf="selectedFestName!=''" (click)="updateFest()" [disabled]="!festForm.valid">Save Festival</button>
-                    <button type="reset" class="btn btn-sm  btn-primary footer-btn" *ngIf="selectedFestName!=''" (click)="resetFestForm()">Add New Festival</button>
+                    <button type="reset" class="btn btn-sm  btn-primary footer-btn" *ngIf="selectedFestName!=''" (click)="resetFestForm(true)">Add New Festival</button>
                     <button type="submit" class="btn btn-sm  btn-primary footer-btn" *ngIf="selectedFestName==''">Add Festival</button>
                   </form>
                 </div>

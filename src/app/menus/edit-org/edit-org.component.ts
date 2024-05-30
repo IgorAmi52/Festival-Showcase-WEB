@@ -70,7 +70,7 @@ export class EditOrgComponent implements OnInit {
       this.screenRefresh.next();
     });
     this.screenRefresh.subscribe(() => {
-      this.resetFestForm();
+      this.resetFestForm(false);
       this.apiService.getFestivals(this.org.festivali).subscribe(
         (festivals) => {
           this.festivals = [];
@@ -115,7 +115,11 @@ export class EditOrgComponent implements OnInit {
       }
     }
     this.festForm.patchValue(editFest);
+
     var images = this.festForm.get('slike') as FormArray;
+    while (images.length !== 0) {
+      images.removeAt(0);
+    }
     for (const image of editFest.slike) {
       images.push(new FormControl(image));
     }
@@ -128,7 +132,7 @@ export class EditOrgComponent implements OnInit {
         .addFestival(this.org.festivali, formValueJson)
         .subscribe(() => {
           this.screenRefresh.next();
-          this.resetFestForm();
+          this.resetFestForm(false);
         });
     }
   }
@@ -144,7 +148,7 @@ export class EditOrgComponent implements OnInit {
         )
         .subscribe(() => {
           this.screenRefresh.next();
-          this.resetFestForm();
+          this.resetFestForm(false);
         });
     }
   }
@@ -156,7 +160,7 @@ export class EditOrgComponent implements OnInit {
         .editOrganisation(this.org.ID, formValueJson)
         .subscribe(() => {
           this.screenRefresh.next();
-          this.resetFestForm();
+          this.resetFestForm(false);
           this.orgRefresh.next();
           this.closeModal('#editModal');
         });
@@ -173,7 +177,7 @@ export class EditOrgComponent implements OnInit {
           this.screenRefresh.next();
 
           $('#editModal').modal('show');
-          this.resetFestForm();
+          this.resetFestForm(false);
           this.selectedFestName = '';
         },
         (err) => {
@@ -183,7 +187,7 @@ export class EditOrgComponent implements OnInit {
     } else {
       this.apiService.deleteOrganisation(this.org.ID).subscribe(() => {
         this.orgRefresh.next();
-        this.resetFestForm();
+        this.resetFestForm(false);
         this.selectedFestName = '';
         this.closeModal('#deleteModal');
         this.apiService.deleteFestivals(this.org.ID);
@@ -198,7 +202,11 @@ export class EditOrgComponent implements OnInit {
       }
     }
   }
-  resetFestForm() {
+
+  resetFestForm(resetFestName) {
+    if (resetFestName) {
+      this.selectedFestName = '';
+    }
     var images = this.festForm.get('slike') as FormArray;
     while (images.length !== 0) {
       images.removeAt(0);
@@ -207,7 +215,7 @@ export class EditOrgComponent implements OnInit {
   }
   closeModal(id: String) {
     $(id).modal('hide');
-    this.resetFestForm();
+    this.resetFestForm(false);
   }
   openModal(id: String, label: String) {
     if (id == '#deleteModal') {

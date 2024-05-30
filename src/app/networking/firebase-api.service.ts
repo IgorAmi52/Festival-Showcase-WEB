@@ -11,26 +11,26 @@ export class FirebaseApiService {
 
   getOrganisations(): Observable<any> {
     return this.https.get(
-      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/data/organizatoriFestivala.json'
+      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/organizatoriFestivala.json'
     );
   }
   getOrganisation(orgID): Observable<any> {
     return this.https.get(
-      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/data/organizatoriFestivala/' +
+      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/organizatoriFestivala/' +
         orgID +
         '.json'
     );
   }
   deleteOrganisation(orgID): Observable<any> {
     return this.https.delete(
-      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/data/organizatoriFestivala/' +
+      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/organizatoriFestivala/' +
         orgID +
         '.json'
     );
   }
   editOrganisation(orgID, orgJson): Observable<any> {
     return this.https.put(
-      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/data/organizatoriFestivala/' +
+      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/organizatoriFestivala/' +
         orgID +
         '.json',
       orgJson
@@ -38,14 +38,14 @@ export class FirebaseApiService {
   }
   getFestivals(orgID): Observable<any> {
     return this.https.get(
-      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/data/' +
+      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/festivali/' +
         orgID +
         '.json'
     );
   }
   getFestival(orgID, festID): Observable<any> {
     return this.https.get(
-      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/data/' +
+      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/festivali/' +
         orgID +
         '/' +
         festID +
@@ -54,7 +54,7 @@ export class FirebaseApiService {
   }
   editFestival(orgID, festID, festJson): Observable<any> {
     return this.https.put(
-      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/data/' +
+      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/festivali/' +
         orgID +
         '/' +
         festID +
@@ -64,7 +64,7 @@ export class FirebaseApiService {
   }
   deleteFestival(orgID, festID): Observable<any> {
     return this.https.delete(
-      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/data/' +
+      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/festivali/' +
         orgID +
         '/' +
         festID +
@@ -73,14 +73,14 @@ export class FirebaseApiService {
   }
   deleteFestivals(orgID) {
     this.https.delete(
-      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/data/' +
+      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/festivali/' +
         orgID +
         '.json'
     );
   }
   addFestival(orgID, festJson): Observable<any> {
     return this.https.post(
-      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/data/' +
+      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/festivali/' +
         orgID +
         '.json',
       festJson
@@ -88,19 +88,19 @@ export class FirebaseApiService {
   }
   getUsers(): Observable<any> {
     return this.https.get(
-      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/data/korisnici.json'
+      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/korisnici.json'
     );
   }
 
   addUser(userJson): Observable<any> {
     return this.https.post(
-      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/data/korisnici.json',
+      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/korisnici.json',
       userJson
     );
   }
   editUser(userID, userJson): Observable<any> {
     return this.https.put(
-      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/data/korisnici/' +
+      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/korisnici/' +
         userID +
         '.json',
       userJson
@@ -108,7 +108,7 @@ export class FirebaseApiService {
   }
   deleteUser(userID): Observable<any> {
     return this.https.delete(
-      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/data/korisnici/' +
+      'https://webdesign-project-a5e0d-default-rtdb.europe-west1.firebasedatabase.app/korisnici/' +
         userID +
         '.json'
     );
