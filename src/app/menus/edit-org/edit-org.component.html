@@ -16,7 +16,7 @@
               <!--this is the organisation form-->
               <div class="col-lg-6 col-12">
                 <div [style.backgroundImage]="'url(' + org.logo + ')'" id="logoImage"></div>
-                <form [formGroup]="orgForm" ngNativeValidate (ngSubmit)="onSubmit()" #myForm>
+                <form [formGroup]="orgForm" ngNativeValidate (ngSubmit)="updateOrganisation()" #myForm>
                   <div class="form-group">
                     <label for="naziv">Name:</label>
                     <input type="text" id="naziv" formControlName="naziv" required="true" class="form-control">
@@ -52,7 +52,7 @@
               <div class="col-lg-6 col-12">
                 <!--selection of festival-->
                 <h5 style="text-align: center; margin-bottom:10px">Festivals</h5>
-                <select class="form-select" size="3" aria-label="size 3 select" (change)="festSelected($event)">
+                <select class="form-select" size="3" aria-label="size 3 select" [(ngModel)]="selectedFestName" [ngModelOptions]="{standalone: true}" (change)="festSelected()">
                   <option *ngFor="let fest of festivals">{{fest.naziv}}</option>
                 </select>
                 <!--festival form-->
@@ -125,7 +125,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content" >
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
+          <h5 class="modal-title" id="exampleModalLongTitle">Are you sure? {{selectedFestName}}</h5>
           <button type="button" class="btn btn-outline-dark right" data-dismiss="modal" aria-label="Close" (click)="closeModal('#deleteModal')">
             <span aria-hidden="true">&times;</span>
           </button>

@@ -20,9 +20,6 @@ declare var $: any;
   styleUrls: ['./edit-org.component.css'],
 })
 export class EditOrgComponent implements OnInit {
-  selectFest($event: any) {
-    throw new Error('Method not implemented.');
-  }
   @Input() orgInput: Subject<any>;
   orgRefresh: Subject<any>;
   screenRefresh: Subject<any> = new Subject();
@@ -51,7 +48,7 @@ export class EditOrgComponent implements OnInit {
       godinaOsnivanja: ['', Validators.required],
       logo: [''], // You may add validators here if needed
       kontaktTelefon: ['', Validators.required],
-      email: ['', [Validators.email, Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       festivali: [''], // You may add validators here if needed
     });
     this.festForm = this.fb.group({
@@ -73,6 +70,7 @@ export class EditOrgComponent implements OnInit {
       this.screenRefresh.next();
     });
     this.screenRefresh.subscribe(() => {
+      this.resetFestForm();
       this.apiService.getFestivals(this.org.festivali).subscribe(
         (festivals) => {
           this.festivals = [];
@@ -108,9 +106,7 @@ export class EditOrgComponent implements OnInit {
       images.removeAt(index);
     }
   }
-  festSelected($event) {
-    this.selectedFestName = $event.target.value;
-
+  festSelected() {
     let editFest: Festival;
     for (let i in this.festivals) {
       if (this.festivals[i].naziv == this.selectedFestName) {
@@ -125,24 +121,45 @@ export class EditOrgComponent implements OnInit {
     }
   }
   addFestival() {
-    // just adding to array not really adding a festival
-    this.festivals.push({
-      ...this.festForm.value,
-      ID: Math.random().toString(36).slice(2),
-    });
-    this.resetFestForm();
+    if (this.festForm.valid) {
+      const formValue = this.festForm.value;
+      var formValueJson = JSON.stringify(formValue);
+      this.apiService
+        .addFestival(this.org.festivali, formValueJson)
+        .subscribe(() => {
+          this.screenRefresh.next();
+          this.resetFestForm();
+        });
+    }
   }
   updateFest() {
     if (this.festForm.valid) {
       const formValue = this.festForm.value;
       var formValueJson = JSON.stringify(formValue);
-      /// i want to add a property slike that is equal to this.images which is a Array of strings
-      this.apiService.editFestival(
-        this.org.festivali,
-        this.getSelectedFestID(),
-        formValueJson
-      );
-      this.resetFestForm();
+      this.apiService
+        .editFestival(
+          this.org.festivali,
+          this.getSelectedFestID(),
+          formValueJson
+        )
+        .subscribe(() => {
+          this.screenRefresh.next();
+          this.resetFestForm();
+        });
+    }
+  }
+  updateOrganisation() {
+    if (this.orgForm.valid) {
+      const formValue = this.orgForm.value;
+      var formValueJson = JSON.stringify(formValue);
+      this.apiService
+        .editOrganisation(this.org.ID, formValueJson)
+        .subscribe(() => {
+          this.screenRefresh.next();
+          this.resetFestForm();
+          this.orgRefresh.next();
+          this.closeModal('#editModal');
+        });
     }
   }
 
@@ -173,9 +190,7 @@ export class EditOrgComponent implements OnInit {
       });
     }
   }
-  onSubmit() {
-    this.closeModal('#editModal');
-  }
+
   getSelectedFestID() {
     for (let i = 0; i < this.festivals.length; i++) {
       if (this.festivals[i].naziv == this.selectedFestName) {
