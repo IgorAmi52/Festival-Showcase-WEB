@@ -151,6 +151,7 @@ export class EditOrgComponent implements OnInit {
           this.resetFestForm(false);
         });
     }
+    this.selectedFestName = '';
   }
   updateOrganisation() {
     if (this.orgForm.valid) {
