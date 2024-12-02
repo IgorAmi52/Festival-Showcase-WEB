@@ -1,7 +1,7 @@
 # Festival Showcase WEB
 
 This is a simple web design project showcasing a responsive Festival Display website.  
-The project was created as part of my first-year coursework at Faculty of Technical Sciences (Novi Sad, Serbia) to demonstrate proficiency in Angular Development (HTML, CSS, TypeScript).
+The project was created as part of my first-year coursework at **Faculty of Technical Sciences (Novi Sad, Serbia)** to demonstrate proficiency in Angular Development (HTML, CSS, TypeScript).
 
 ---
 
