@@ -52,12 +52,17 @@ The project includes user authentication, data management, and an admin panel fo
 3. Install dependencies:
    ```bash
    npm install
+
+---
+
 ## Usage
 
 1. Run the development server:
    ```bash
    ng serve
 2. Open your browser and go to http://localhost:4200.
+
+---
 
 ## Preview
 
